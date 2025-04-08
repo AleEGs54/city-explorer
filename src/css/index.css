@@ -348,10 +348,11 @@ header {
     /* border: 1px solid #000; */
 }
 
-.call-to-action-container h2{
+.call-to-action-text{
     margin: 0 auto;
     font-size: 3rem;
     text-align: center;
+    font-variant: var(--title-font);
 }
 
 .call-to-action-button{
