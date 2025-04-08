@@ -1,0 +1,74 @@
+[
+    {
+      "businessStatus": "OPERATIONAL",
+      "displayName": "La Salsa palo verde",
+      "id": "ChIJK3N_FPqhXRQR_sLcoHd_GsM",
+      "location": {
+        "lat": 29.056533199999993,
+        "lng": -110.9701358
+      }
+    },
+    {
+      "businessStatus": "OPERATIONAL",
+      "displayName": "Taquitos Mela Cenaduría",
+      "id": "ChIJtRQXN0WEzoYRaMD2MAu4vLg",
+      "location": {
+        "lat": 29.073922299999996,
+        "lng": -110.964311
+      }
+    },
+    {
+      "businessStatus": "OPERATIONAL",
+      "displayName": "Asadero 33 Grill & Beer",
+      "id": "ChIJo7OJhjaEzoYRHCmSUyJEdhk",
+      "location": {
+        "lat": 29.0887262,
+        "lng": -110.9573108
+      }
+    },
+    {
+      "businessStatus": "OPERATIONAL",
+      "displayName": "Tacos de Don Marcos",
+      "id": "ChIJ34bmDgCFzoYRpSKPEFFOp0g",
+      "location": {
+        "lat": 29.076898600000003,
+        "lng": -110.9809817
+      }
+    },
+    {
+      "businessStatus": "OPERATIONAL",
+      "displayName": "TAQUERIA Arturo's",
+      "id": "ChIJt_DhQfqhXRQRQz3FZSKh498",
+      "location": {
+        "lat": 29.056172000000004,
+        "lng": -111.004762
+      }
+    },
+    {
+      "businessStatus": "OPERATIONAL",
+      "displayName": "La Salsa Libertad",
+      "id": "ChIJfRdl8wSFzoYRMIeYEjGgW2U",
+      "location": {
+        "lat": 29.032162699999997,
+        "lng": -110.9589819
+      }
+    },
+    {
+      "businessStatus": "OPERATIONAL",
+      "displayName": "Country Taco",
+      "id": "ChIJF5UgxkyEzoYRsO5h5NdlfNg",
+      "location": {
+        "lat": 29.0794002,
+        "lng": -110.9514141
+      }
+    },
+    {
+      "businessStatus": "OPERATIONAL",
+      "displayName": "TAQUERIA WICHO'S",
+      "id": "ChIJZUtpneOhXRQRdSGRZ04vDmI",
+      "location": {
+        "lat": 29.0509709,
+        "lng": -110.956497
+      }
+    }
+  ]
