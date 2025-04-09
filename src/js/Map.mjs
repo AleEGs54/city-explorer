@@ -1,4 +1,4 @@
-class Map {
+export default class Map {
     constructor(userLocation, apiKey) {
         this.location = userLocation
         this.apiKey = apiKey
@@ -7,7 +7,9 @@ class Map {
 
     init() {
         this.getGoogleMapsApi(this.apiKey);
-        this.initMap(this.location)
+        this.initMap();
+        this.buildAdvancedMarker();
+        this.nearbySearch();
     }
 
     async getGoogleMapsApi(apiKey) {
@@ -20,24 +22,103 @@ class Map {
     }
 
 
-    async initMap(location) {
-        // The users location in an object LongLat
-        const position = { lat: location.lat, lng: location.lng };
+    async initMap() {
         // Request needed libraries.
-        const { Map } = await google.maps.importLibrary("maps");
-        const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+        const { Map, InfoWindow } = await google.maps.importLibrary("maps");
+        
 
         // The map, centered at user's location
-        map = new Map(document.getElementById("map"), {
-            zoom: 4,
-            center: position,
+        this.map = new Map(document.getElementById("map"), {
+            zoom: 15,
+            center: this.location,
+            mapId: 'DEMO_MAP_ID',
+        });
+
+        //The info window
+        const infoWindow = new InfoWindow();
+
+
+       
+    }
+
+    async buildAdvancedMarker(){
+        //Get the libraries
+        const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+
+         //The marker's mod
+         const mod = new PinElement({
+            borderColor: "#fff",
+            scale: 1.5,
+            glyph: "Me",
+            glyphColor: '#fff'
         });
 
         // The marker, positioned at user's location
         const marker = new AdvancedMarkerElement({
-            map: map,
-            position: position,
-            title: "User Location",
+            map: this.map,
+            position: this.location,
+            title: "Your location",
+            content: mod.element,
+            gmpClickable: true,
         });
+
+        //Event listener when the marker is clicked
+        marker.addListener('click', ({ event, latLng}) => {
+            infoWindow.close();
+            infoWindow.setContent(marker.title);
+            infoWindow.open(marker.map, marker);
+        })
+
+    }
+
+    async nearbySearch(){
+        //Importing libaries I need.
+        const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+        const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary('places') ;
+
+
+        //Specify the details of the request
+        const request = {
+            //required parameter
+            fields: ['displayName', 'photos', 'rating', 'userRatingCount', 'reviews', 'priceLevel', 'primaryType', 'location', 'types'],
+            locationRestriction: {
+                center: this.location,
+                radius: 1500,
+            },
+            //optional parameters
+            includedPrimaryTypes: ['restaurant', 'movie_theater', 'park', 'shopping_mall'],
+            maxResultCount: 10,
+            rankPreference: SearchNearbyRankPreference.POPULARITY,
+            language: 'en',
+            region: 'us',
+        }
+
+        const { places } = await Place.searchNearby(request);
+
+        if (places.length) {
+            console.log(places);
+            //get latlngbound library/class
+            const { LatLngBounds } = await google.maps.importLibrary('core');
+            const bounds = new LatLngBounds();
+
+            //Loop throiugh and get all the results.
+            places.forEach((place) => {
+                const markerView = new AdvancedMarkerElement({
+                    map: this.map,
+                    position: place.location,
+                    title: place.displayName,
+                });
+
+                //Extend the search to the places searchNearby found (otherwise these wont show up in the map)
+                bounds.extend(place.location);
+            })
+
+            //After the loop has finished and all the places have been added to the bounds, this line tells the map to adjust its view so that all the places are visible on the map.
+            this.map.fitBounds(bounds)
+
+        } else {
+            console.log('No Results Found');
+        }
+        
     }
 }

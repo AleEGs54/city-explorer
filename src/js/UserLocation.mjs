@@ -1,7 +1,7 @@
 export default class UserLocation {
 
     /** 
-    *The constructor takes the BYU-Idaho building as default (maybe the user doesn't want to share his location)
+    *The constructor takes the BYU-Idaho building as default (maybe the user doesn't want to share his location). Or can take customized latLng values; if not, it will try to get the user's real location.
     */
     constructor(latitude = 43.81463458983826, longitude = -111.78321208736119, enableHighAccuracy = true, timeout = Infinity, maximumAge = 0) {
 
