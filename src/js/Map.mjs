@@ -3,29 +3,32 @@ export default class Map {
         this.location = userLocation
         this.apiKey = apiKey
         this.map;
+        this.data = [];
     }
 
     init() {
-        this.getGoogleMapsApi(this.apiKey);
-        this.initMap();
-        this.buildAdvancedMarker();
-        this.nearbySearch();
+        this.getGoogleMapsApi();
+        // this.initMap();
+        // this.buildAdvancedMarker();
+        // this.nearbySearch();
     }
 
-    async getGoogleMapsApi(apiKey) {
+    async getGoogleMapsApi() {
 
         (g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })({
-            key: `${apiKey}`,
+            key: `${this.apiKey}`,
             v: "weekly",
 
         });
     }
 
-
+    /**
+     * Initializes the map
+    */
     async initMap() {
         // Request needed libraries.
         const { Map, InfoWindow } = await google.maps.importLibrary("maps");
-        
+
 
         // The map, centered at user's location
         this.map = new Map(document.getElementById("map"), {
@@ -38,15 +41,18 @@ export default class Map {
         const infoWindow = new InfoWindow();
 
 
-       
+
     }
 
-    async buildAdvancedMarker(){
+    /**
+     * Shows ur location, that's all
+     */
+    async buildAdvancedMarker() {
         //Get the libraries
         const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
 
-         //The marker's mod
-         const mod = new PinElement({
+        //The marker's mod
+        const mod = new PinElement({
             borderColor: "#fff",
             scale: 1.5,
             glyph: "Me",
@@ -63,7 +69,7 @@ export default class Map {
         });
 
         //Event listener when the marker is clicked
-        marker.addListener('click', ({ event, latLng}) => {
+        marker.addListener('click', ({ event, latLng }) => {
             infoWindow.close();
             infoWindow.setContent(marker.title);
             infoWindow.open(marker.map, marker);
@@ -71,10 +77,13 @@ export default class Map {
 
     }
 
-    async nearbySearch(){
+    /**
+     * Makes a nearby search with the default values.
+    */
+    async nearbySearch() {
         //Importing libaries I need.
         const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-        const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary('places') ;
+        const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary('places');
 
 
         //Specify the details of the request
@@ -96,12 +105,14 @@ export default class Map {
         const { places } = await Place.searchNearby(request);
 
         if (places.length) {
-            console.log(places);
             //get latlngbound library/class
             const { LatLngBounds } = await google.maps.importLibrary('core');
             const bounds = new LatLngBounds();
 
-            //Loop throiugh and get all the results.
+            //Fill data with places information.
+            this.data = places;
+
+            //Loop through and get all the results.
             places.forEach((place) => {
                 const markerView = new AdvancedMarkerElement({
                     map: this.map,
@@ -119,6 +130,31 @@ export default class Map {
         } else {
             console.log('No Results Found');
         }
-        
+
     }
+
+
+    get gatheredData() {
+        return this.data;
+    }
+
+    /**
+     * Returns the city name based on the user's location (if given). Or, from Rexburg, ID. Uses the Nominatim API (OpenStreetMap).
+     */
+    async getCityFromCoordinates() {
+
+        const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${this.location.lat}&lon=${this.location.lng}`;
+      
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        
+        try {
+
+            return data.address.city;
+            
+        } catch {
+          throw new Error("Geocoding failed: " + data);
+        }
+      }
 }
