@@ -42,8 +42,7 @@ function generatePriceLevel(level) {
       priceNumber = 4;
       break;
     default:
-      priceNumber = 2;
-      break;
+      return 'Free';
   }
 
 
@@ -115,4 +114,32 @@ export function buildBodyCarousel(title, htmlParentElement) {
         </div>
 
   `)
+}
+
+export function buildInfoWindowCard(place) {
+  const content =
+    `
+    <div id="infowindow-content">
+        <span id="place-displayname" class="title">
+        <strong>${place.displayName}</strong>
+        <br />
+        <p class='extra-info'>
+        ${capitalizeEachWord(replaceUnderscoresWithSpaces(place.primaryType))}
+        </p>
+        </span>
+        
+        <div class="suggestions-section-stars">
+        <div class="subtitle">Valoration:</div> 
+          <div class="suggestions-stars-container">
+          ${generateStars(place.rating)}</div>
+          <p class='extra-info'> - ${place.userRatingCount} reviews</p>
+        </div>
+        <div class="suggestions-section-cost">
+        <div class="subtitle">Average Price: </div>
+         ${generatePriceLevel(place.priceLevel)}
+        </div>
+        <span id="place-address"><div class="subtitle">Address:</div> ${place.formattedAddress}</span>
+    </div>
+`;
+  return content;
 }

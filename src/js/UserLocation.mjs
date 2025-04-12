@@ -57,4 +57,3 @@ export default class UserLocation {
 
 }
 
-//como usar el resolve en la clase (no se esta usando)

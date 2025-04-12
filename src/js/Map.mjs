@@ -1,3 +1,5 @@
+import { buildInfoWindowCard } from "./userInterface.mjs";
+
 export default class Map {
     constructor(userLocation, apiKey) {
         this.location = userLocation
@@ -27,7 +29,7 @@ export default class Map {
     */
     async initMap() {
         // Request needed libraries.
-        const { Map, InfoWindow } = await google.maps.importLibrary("maps");
+        const { Map } = await google.maps.importLibrary("maps");
 
 
         // The map, centered at user's location
@@ -37,18 +39,17 @@ export default class Map {
             mapId: 'DEMO_MAP_ID',
         });
 
-        //The info window
-        const infoWindow = new InfoWindow();
-
-
-
+        //Link to the autocomplete search bar
+        this.runPlaceAutocomplete(this.map);
     }
 
     /**
      * Shows the location of all places requested by the param 'place'
      * @param place: Array of Objects containing information about a place.
+     * @param content: If not given, the place's name will be used
+     * @param open: Specifies if the infoWindow should be open when looking for a place.
      */
-    async buildAdvancedMarker(place) {
+    async buildAdvancedMarker(place, content = null, open = false) {
         //Get the libraries
         const { InfoWindow } = await google.maps.importLibrary("maps");
         const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
@@ -73,9 +74,15 @@ export default class Map {
         //Event listener when the marker is clicked
         marker.addListener('click', ({ event, latLng }) => {
             infoWindow.close();
-            infoWindow.setContent(marker.title);
+            infoWindow.setContent(
+                content ? content : marker.title
+            );
             infoWindow.open(marker.map, marker);
-        })
+        });
+
+        if (open) {
+            marker.click();
+        }
 
     }
 
@@ -85,7 +92,6 @@ export default class Map {
     */
     async nearbySearch(primaryTypesList) {
         //Importing libaries I need.
-        const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
         const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary('places');
 
 
@@ -117,12 +123,8 @@ export default class Map {
 
             //Loop through and get all the results.
             places.forEach((place) => {
-                // const markerView = new AdvancedMarkerElement({
-                //     map: this.map,
-                //     position: place.location,
-                //     title: place.displayName,
-                // });
 
+                //Builds markers for each place and adds an icon to it.
                 this.buildAdvancedMarker(place);
 
                 //Extend the search to the places searchNearby found (otherwise these wont show up in the map)
@@ -149,17 +151,52 @@ export default class Map {
     async getCityFromCoordinates() {
 
         const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${this.location.lat}&lon=${this.location.lng}`;
-      
+
         const response = await fetch(url);
         const data = await response.json();
-        
-        
+
+
         try {
 
             return data.address.city;
-            
+
         } catch {
-          throw new Error("Geocoding failed: " + data);
+            throw new Error("Geocoding failed: " + data);
         }
-      }
+    }
+
+    async runPlaceAutocomplete(map) {
+        await google.maps.importLibrary("places");
+
+        //create a placeAutocomplete instance
+        const placeAutocomplete = new google.maps.places.PlaceAutocompleteElement();
+
+        //give it an id and location bias
+        placeAutocomplete.id = 'search-bar';
+        //placeAutocomplete.locationBias = center;
+
+        //put the input (place autocomplete) inside the container.
+        const container = document.querySelector('.search-section');
+        container.appendChild(placeAutocomplete);
+
+        // Add the gmp-placeselect listener, and display the results on the map.
+        placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {
+            const place = placePrediction.toPlace();
+            await place.fetchFields({ fields: ['displayName', 'rating', 'userRatingCount', 'priceLevel', 'primaryType', 'location', 'types', 'svgIconMaskURI', 'iconBackgroundColor', 'formattedAddress'] });
+            // If the place has a geometry, then present it on a map.
+            if (place.viewport) {
+                map.fitBounds(place.viewport);
+            }
+            else {
+                map.setCenter(place.location);
+                map.setZoom(17);
+            }
+
+            let content = buildInfoWindowCard(place);
+
+            //Build the marker for the place selected
+            this.buildAdvancedMarker(place, content, open=true);
+        });
+
+    }
 }

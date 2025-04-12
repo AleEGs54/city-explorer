@@ -25,6 +25,10 @@ h6 {
   font-family: var(--title-font);
 }
 
+.subtitle{
+  font-family: var(--title-font);
+}
+
 /* Header */
 header {
   display: flex;
@@ -376,6 +380,28 @@ header {
 
 .extra-info{
   color: #000000b6;
+}
+
+/* Info Windows */
+#infowindow-content{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#infowindow-content #place-displayname{
+  font-size: var(--text-font-size-large);
+}
+
+#infowindow-content .suggestions-section-stars{
+  display: flex;
+  justify-content: start;
+  gap: .5rem;
+}
+
+#infowindow-content .extra-info{
+  margin: 0;
+  font-size: var(--text-font-size-medium);
 }
 
 /* Suggestions section end */
