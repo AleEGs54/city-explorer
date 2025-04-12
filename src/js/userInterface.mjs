@@ -59,6 +59,12 @@ function resizeText(text, limit = 100) {
 
 
 export function buildSimpleCard(htmlParentElement, place) {
+
+  //If pictures are not available, dont create the card.
+  if (!place.photos || place.photos.length === 0 || !place.photos[0].getURI) {
+    return;
+  }
+
   htmlParentElement.insertAdjacentHTML('beforeend', `
     <div class="card">
       <div class="card-image">

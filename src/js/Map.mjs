@@ -45,25 +45,27 @@ export default class Map {
     }
 
     /**
-     * Shows ur location, that's all
+     * Shows the location of all places requested by the param 'place'
+     * @param place: Array of Objects containing information about a place.
      */
-    async buildAdvancedMarker() {
+    async buildAdvancedMarker(place) {
         //Get the libraries
+        const { InfoWindow } = await google.maps.importLibrary("maps");
         const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
 
-        //The marker's mod
+        const infoWindow = new InfoWindow()
+
+        //The marker's modifiers
         const mod = new PinElement({
-            borderColor: "#fff",
-            scale: 1.5,
-            glyph: "Me",
-            glyphColor: '#fff'
+            background: place.iconBackgroundColor,
+            glyph: new URL(String(place.svgIconMaskURI)),
         });
 
         // The marker, positioned at user's location
         const marker = new AdvancedMarkerElement({
             map: this.map,
-            position: this.location,
-            title: "Your location",
+            position: place.location,
+            title: place.displayName,
             content: mod.element,
             gmpClickable: true,
         });
@@ -78,9 +80,10 @@ export default class Map {
     }
 
     /**
-     * Makes a nearby search with the default values.
+     * Makes a nearby search within a radius of 1500 meters. Receives an array with the included Primary Types to filter the search.
+     * @param includedPrimaryTypes: Array.
     */
-    async nearbySearch() {
+    async nearbySearch(primaryTypesList) {
         //Importing libaries I need.
         const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
         const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary('places');
@@ -89,13 +92,13 @@ export default class Map {
         //Specify the details of the request
         const request = {
             //required parameter
-            fields: ['displayName', 'photos', 'rating', 'userRatingCount', 'reviews', 'priceLevel', 'primaryType', 'location', 'types'],
+            fields: ['displayName', 'photos', 'rating', 'userRatingCount', 'reviews', 'priceLevel', 'primaryType', 'location', 'types', 'svgIconMaskURI', 'iconBackgroundColor'],
             locationRestriction: {
                 center: this.location,
                 radius: 1500,
             },
             //optional parameters
-            includedPrimaryTypes: ['restaurant', 'movie_theater', 'park', 'shopping_mall'],
+            includedPrimaryTypes: primaryTypesList,
             maxResultCount: 10,
             rankPreference: SearchNearbyRankPreference.POPULARITY,
             language: 'en',
@@ -114,11 +117,13 @@ export default class Map {
 
             //Loop through and get all the results.
             places.forEach((place) => {
-                const markerView = new AdvancedMarkerElement({
-                    map: this.map,
-                    position: place.location,
-                    title: place.displayName,
-                });
+                // const markerView = new AdvancedMarkerElement({
+                //     map: this.map,
+                //     position: place.location,
+                //     title: place.displayName,
+                // });
+
+                this.buildAdvancedMarker(place);
 
                 //Extend the search to the places searchNearby found (otherwise these wont show up in the map)
                 bounds.extend(place.location);
