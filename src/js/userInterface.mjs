@@ -1,4 +1,6 @@
 import { capitalizeEachWord, replaceUnderscoresWithSpaces } from "./utils.mjs";
+import { getLocalStorage } from "./localStorageManagement.mjs";
+
 
 function generateStars(rating) {
   const totalStars = 5;
@@ -65,10 +67,19 @@ export function buildSimpleCard(htmlParentElement, place) {
   }
 
   htmlParentElement.insertAdjacentHTML('beforeend', `
-    <div class="card">
+    <div class="card" data-id=${place.id}>
       <div class="card-image">
         <img src="${place.photos[0].getURI()}" alt="image placeholder" class="suggestion-place-image">
-        <svg class="suggestion-check-icon" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:#101820;}</style></defs><title/><g data-name="Layer 28" id="Layer_28"><path class="cls-1" d="M16,31A15,15,0,1,1,31,16,15,15,0,0,1,16,31ZM16,3A13,13,0,1,0,29,16,13,13,0,0,0,16,3Z"/><path class="cls-1" d="M13.67,22a1,1,0,0,1-.73-.32l-4.67-5a1,1,0,0,1,1.46-1.36l3.94,4.21,8.6-9.21a1,1,0,1,1,1.46,1.36l-9.33,10A1,1,0,0,1,13.67,22Z"/></g></svg>
+        <svg class="suggestion-check-icon" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>.cls-1{fill:currentColor;}</style> <!-- importante: usa currentColor -->
+  </defs>
+  <title/>
+  <g data-name="Layer 28" id="Layer_28">
+    <path class="cls-1" d="M16,31A15,15,0,1,1,31,16,15,15,0,0,1,16,31ZM16,3A13,13,0,1,0,29,16,13,13,0,0,0,16,3Z"/>
+    <path class="cls-1" d="M13.67,22a1,1,0,0,1-.73-.32l-4.67-5a1,1,0,0,1,1.46-1.36l3.94,4.21,8.6-9.21a1,1,0,1,1,1.46,1.36l-9.33,10A1,1,0,0,1,13.67,22Z"/>
+  </g>
+</svg>
 
         <svg class="suggestion-heart-icon" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       </div>
@@ -136,10 +147,45 @@ export function buildInfoWindowCard(place) {
         </div>
         <div class="suggestions-section-cost">
         <div class="subtitle">Average Price: </div>
-         ${generatePriceLevel(place.priceLevel)}
+          ${generatePriceLevel(place.priceLevel)}
         </div>
         <span id="place-address"><div class="subtitle">Address:</div> ${place.formattedAddress}</span>
     </div>
 `;
   return content;
+}
+
+export function setIconState(htmlParentElement, iconName) {
+  const icon = htmlParentElement.querySelector(`${iconName}`)
+  icon.classList.toggle('on');
+}
+
+/**
+ * Turns on the icons whose ID is at local storage.
+*/
+export function initializeIconStates() {
+  const likedPlaces = getLocalStorage('likedPlaces') || [];
+  const visitedPlaces = getLocalStorage('visitedPlaces') || [];
+
+  const cards = document.querySelectorAll('.card');
+
+  cards.forEach((card) => {
+    const placeId = card.dataset.id;
+
+    const heartIcon = card.querySelector('.suggestion-heart-icon');
+    const checkIcon = card.querySelector('.suggestion-check-icon');
+
+    // Verifica si placeId está en localStorage y agrega la clase 'on'
+    if (likedPlaces.includes(placeId)) {
+      heartIcon.classList.add('on');
+    } else {
+      heartIcon.classList.remove('on');
+    }
+
+    if (visitedPlaces.includes(placeId)) {
+      checkIcon.classList.add('on');
+    } else {
+      checkIcon.classList.remove('on');
+    }
+  });
 }

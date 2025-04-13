@@ -173,7 +173,7 @@ export default class Map {
 
         //give it an id and location bias
         placeAutocomplete.id = 'search-bar';
-        //placeAutocomplete.locationBias = center;
+        placeAutocomplete.LocationBias = "IP_BIAS";
 
         //put the input (place autocomplete) inside the container.
         const container = document.querySelector('.search-section');

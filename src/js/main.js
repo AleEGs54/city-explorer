@@ -1,60 +1,76 @@
 import UserLocation from "./UserLocation.mjs";
 import Map from "./Map.mjs";
-import { buildSimpleCard, buildBodyCarousel } from "./userInterface.mjs";
+import { buildSimpleCard, buildBodyCarousel, setIconState, initializeIconStates } from "./userInterface.mjs";
+import { toggleItemInStorage } from "./localStorageManagement.mjs";
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-/**
- * Initializes the app: gets user location, loads the map, displays markers and UI.
-*/
 async function initApp() {
-    try {
-        const userLocation = new UserLocation();
-        const locationData = await userLocation.getLocation();
-        console.log("User location:", locationData);
+  try {
+    const userLocation = new UserLocation();
+    const locationData = await userLocation.getLocation();
+    console.log("User location:", locationData);
 
-        const map = new Map(locationData, apiKey);
+    const map = new Map(locationData, apiKey);
 
-        map.init(); // loads Google Maps API
-        await map.initMap(); // creates the map
-        await map.nearbySearch(['restaurant', 'movie_theater', 'park', 'shopping_mall']); // gets places
+    map.init(); // Load Google Maps API
+    await map.initMap();
 
-        
-        //Sets the name of the city and displays it.
-        const cityName = await map.getCityFromCoordinates();
-        buildBodyCarousel(`Top in ${cityName}`, document.querySelector('.suggestions-section-top-location'));
+    // Load all categories initially
+    await map.nearbySearch(['restaurant', 'movie_theater', 'park', 'shopping_mall']);
+    const cityName = await map.getCityFromCoordinates();
 
-        //Builds the 'Top in your location'
-        const dataTop = map.gatheredData;
-        dataTop.forEach((place) => {
-            if (Math.round(place.rating) === 5) buildSimpleCard(document.querySelector('.suggestions-section-top-location .carousel-container'), place);
-        })
+    renderSection(`Top in ${cityName}`, '.suggestions-section-top-location', place => Math.round(place.rating) === 5, map);
 
-        //Builds the 'Best Restaurants Next To You'
-        await map.nearbySearch(['restaurant'])
+    await map.nearbySearch(['restaurant']);
+    renderSection('Best Restaurants Next To You', '.suggestions-section-restaurants', place => Math.round(place.rating) >= 4, map);
 
-        const dataRestaurants = map.gatheredData;
+    await map.nearbySearch(['movie_theater', 'park', 'shopping_mall']);
+    renderSection('Wanna Chill?', '.suggestions-section-wanna-chill', place => Math.round(place.rating) >= 4, map);
 
-        buildBodyCarousel(`Best Restaurants Next To You`, document.querySelector('.suggestions-section-restaurants'));
+    attachCardIconListeners();
+    initializeIconStates();
 
-        dataRestaurants.forEach((place) => {
-            if (Math.round(place.rating) >= 4) buildSimpleCard(document.querySelector('.suggestions-section-restaurants .carousel-container'), place);
-        })
+  } catch (error) {
+    console.error("An error occurred during app initialization:", error);
+  }
+}
 
-        //Builds the 'Wanna Chill?'
-        await map.nearbySearch(['movie_theater', 'park', 'shopping_mall'])
+/**
+ * Renders a section with filtered places and builds the carousel and cards
+ */
+function renderSection(title, sectionSelector, filterFn, mapInstance) {
+  const section = document.querySelector(sectionSelector);
+  buildBodyCarousel(title, section);
 
-        const dataChill = map.gatheredData;
+  const container = section.querySelector('.carousel-container');
+  mapInstance.gatheredData
+    .filter(filterFn)
+    .forEach(place => buildSimpleCard(container, place));
+}
 
-        buildBodyCarousel(`Wanna Chill?`, document.querySelector('.suggestions-section-wanna-chill'));
+/**
+ * Adds event listeners to all cards for like/visited icons
+ */
+function attachCardIconListeners() {
+  const cards = document.querySelectorAll('.card');
 
-        dataChill.forEach((place) => {
-            if (Math.round(place.rating) >= 4) buildSimpleCard(document.querySelector('.suggestions-section-wanna-chill .carousel-container'), place);
-        })
+  cards.forEach((card) => {
+    const actions = [
+      { iconClass: '.suggestion-heart-icon', storageKey: 'likedPlaces' },
+      { iconClass: '.suggestion-check-icon', storageKey: 'visitedPlaces' },
+    ];
 
-    } catch (error) {
-        console.error("An error occurred during app initialization:", error);
-    }
+    actions.forEach(({ iconClass, storageKey }) => {
+      const icon = card.querySelector(iconClass);
+      if (!icon) return;
+
+      icon.addEventListener('click', () => {
+        toggleItemInStorage(storageKey, card.dataset.id);
+        setIconState(card, iconClass);
+      });
+    });
+  });
 }
 
 // Run the app

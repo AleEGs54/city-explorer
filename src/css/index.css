@@ -320,6 +320,23 @@ header {
   
 }
 
+.suggestion-heart-icon.on{
+  color: red;        
+  fill: red;         
+}
+
+.suggestion-heart-icon:hover {
+  color: red;
+  fill: red;
+}
+
+.suggestion-check-icon.on {
+  color: green;     
+}
+.suggestion-check-icon:hover {
+  color: green;     
+}
+
 .suggestion-check-icon, .suggestion-heart-icon{
   position: absolute;
   top: 10px;
