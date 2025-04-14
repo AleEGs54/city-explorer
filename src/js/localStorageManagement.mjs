@@ -1,13 +1,13 @@
 export function toggleItemInStorage(key, itemId) {
-    // Obtiene el array actual desde localStorage o crea uno nuevo
+    // Get the localStorage's array or creates a new one
     const items = getLocalStorage(key) || [];
   
-    // Crea un nuevo array con el item agregado o eliminado
+    // Creates a new array with or without the item
     const updatedItems = items.includes(itemId)
       ? items.filter(id => id !== itemId)
       : items.concat(itemId);
   
-    // Guarda el array actualizado en localStorage
+    // Stores the updated array at localStorage
     setLocalStorage(key, updatedItems);
   }
   

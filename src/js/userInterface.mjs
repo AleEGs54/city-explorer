@@ -175,7 +175,7 @@ export function initializeIconStates() {
     const heartIcon = card.querySelector('.suggestion-heart-icon');
     const checkIcon = card.querySelector('.suggestion-check-icon');
 
-    // Verifica si placeId está en localStorage y agrega la clase 'on'
+    //Verifies if placeId is in localStorage and adds or removes it
     if (likedPlaces.includes(placeId)) {
       heartIcon.classList.add('on');
     } else {
