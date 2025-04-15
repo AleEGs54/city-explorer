@@ -2,10 +2,16 @@ import UserLocation from "./UserLocation.mjs";
 import Map from "./Map.mjs";
 import { buildSimpleCard, buildBodyCarousel, setIconState, initializeIconStates } from "./userInterface.mjs";
 import { toggleItemInStorage } from "./localStorageManagement.mjs";
+import { loadHeaderFooter } from "./utils.mjs";
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 async function initApp() {
+
+
+  //builds header and footer
+  loadHeaderFooter();
+
   try {
     const userLocation = new UserLocation();
     const locationData = await userLocation.getLocation();
@@ -17,7 +23,9 @@ async function initApp() {
     await map.initMap();
 
     // Load all categories initially
-    await map.nearbySearch(['restaurant', 'movie_theater', 'park', 'shopping_mall']);
+    await map.nearbySearch(['restaurant', 'movie_theater', 'park', 'shopping_mall', 'museum']);
+
+    //Get the city's name
     const cityName = await map.getCityFromCoordinates();
 
     renderSection(`Top in ${cityName}`, '.suggestions-section-top-location', place => Math.round(place.rating) === 5, map);
@@ -30,6 +38,19 @@ async function initApp() {
 
     attachCardIconListeners();
     initializeIconStates();
+
+
+    //filters!!!
+    const filterButtons = document.querySelectorAll('.filter-button');
+
+    filterButtons.forEach(fButton => {
+      const filterType = fButton.dataset.filter;
+      fButton.addEventListener('click', () => {
+        displayFilteredResultsOnMap(filterType, map);
+      })
+    })
+
+    //end filters!!!
 
   } catch (error) {
     console.error("An error occurred during app initialization:", error);
@@ -71,6 +92,44 @@ function attachCardIconListeners() {
       });
     });
   });
+}
+
+
+
+async function displayFilteredResultsOnMap(filterType, mapInstance) {
+  if (filterType === 'no-filter') {
+    filterType = ['restaurant', 'movie_theater', 'park', 'shopping_mall', 'museum'];
+  } else if (filterType === 'entertainment') {
+    filterType = [
+      "amusement_park",
+      "plaza",
+      "national_park",
+      "tourist_attraction",
+      "concert_hall",
+      "aquarium",
+      "zoo",
+      "water_park",
+      "movie_theater"
+    ];
+  } else if (filterType === 'shopping') {
+    filterType = [
+      "grocery_store",
+      "supermarket",
+      "department_store",
+      "convenience_store",
+      "shopping_mall",
+      "warehouse_store",
+      "book_store",
+      "electronics_store",
+      "clothing_store",
+      "home_goods_store"
+    ]
+  } else {
+    filterType = [filterType];
+
+  }
+
+  await mapInstance.nearbySearch(filterType);
 }
 
 // Run the app

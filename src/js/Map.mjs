@@ -6,6 +6,7 @@ export default class Map {
         this.apiKey = apiKey
         this.map;
         this.data = [];
+        this.markers = []; 
     }
 
     init() {
@@ -46,7 +47,7 @@ export default class Map {
     /**
      * Shows the location of all places requested by the param 'place'
      * @param place: Array of Objects containing information about a place.
-     * @param content: If not given, the place's name will be used
+     * @param content: If not given, the place's name will be used when building the card
      * @param open: Specifies if the infoWindow should be open when looking for a place.
      */
     async buildAdvancedMarker(place, content = null, open = false) {
@@ -71,8 +72,11 @@ export default class Map {
             gmpClickable: true,
         });
 
+        //Add marker to the markers array
+        this.markers.push(marker);
+
         //Event listener when the marker is clicked
-        marker.addListener('click', ({ event, latLng }) => {
+        marker.addListener('click', () => {
             infoWindow.close();
             infoWindow.setContent(
                 content ? content : marker.title
@@ -87,10 +91,24 @@ export default class Map {
     }
 
     /**
+     * Delete all markers over the map.
+     */
+    clearMarkers() {
+        for (let i = 0; i < this.markers.length; i++) {
+            this.markers[i].map = null; // Elimina el marcador del mapa
+        }
+        this.markers = []; // Limpia el array de marcadores
+    }
+
+    /**
      * Makes a nearby search within a radius of 1500 meters. Receives an array with the included Primary Types to filter the search.
      * @param includedPrimaryTypes: Array.
     */
     async nearbySearch(primaryTypesList) {
+
+        //delete all old markers before making a new search
+        this.clearMarkers();
+
         //Importing libaries I need.
         const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary('places');
 
@@ -101,7 +119,7 @@ export default class Map {
             fields: ['displayName', 'photos', 'rating', 'userRatingCount', 'reviews', 'priceLevel', 'primaryType', 'location', 'types', 'svgIconMaskURI', 'iconBackgroundColor'],
             locationRestriction: {
                 center: this.location,
-                radius: 1500,
+                radius: 2500,
             },
             //optional parameters
             includedPrimaryTypes: primaryTypesList,
@@ -155,7 +173,6 @@ export default class Map {
         const response = await fetch(url);
         const data = await response.json();
 
-
         try {
 
             return data.address.city;
@@ -200,3 +217,5 @@ export default class Map {
 
     }
 }
+
+
