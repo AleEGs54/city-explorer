@@ -2,10 +2,10 @@ import { resolve } from "path";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  root: "src/", // Define la carpeta raíz del proyecto
+  root: "src/",
 
   build: {
-    outDir: "../dist", // Carpeta de salida de los archivos compilados
+    outDir: "../dist",
     rollupOptions: {
       input: {
         main: resolve(__dirname, "src/index.html"),
