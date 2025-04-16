@@ -15,9 +15,8 @@ async function initApp() {
   try {
     const userLocation = new UserLocation();
     const locationData = await userLocation.getLocation();
-    console.log("User location:", locationData);
 
-    const map = new Map(locationData, apiKey);
+    const map = new Map(locationData, true);
 
     map.init(); // Load Google Maps API
     await map.initMap();
@@ -86,7 +85,10 @@ function attachCardIconListeners() {
       const icon = card.querySelector(iconClass);
       if (!icon) return;
 
-      icon.addEventListener('click', () => {
+      icon.addEventListener('click', (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        
         toggleItemInStorage(storageKey, card.dataset.id);
         setIconState(card, iconClass);
       });

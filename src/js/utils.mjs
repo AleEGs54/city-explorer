@@ -50,3 +50,9 @@ export async function loadHeaderFooter() {
 }
 
 
+export function getParam(param) {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const place = urlParams.get(param);
+  return place;
+}

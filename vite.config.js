@@ -9,9 +9,10 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, "src/index.html"),
-        map: resolve(__dirname, "src/mapPage/map.html"),
-        place: resolve(__dirname, "src/placeDetailsPage/placeDetails.html"),
+        place: resolve(__dirname, "src/placeDetails/placeDetails.html"),
+        favorites: resolve(__dirname, "src/favorites/favorites.html"),
       },
     },
   },
 });
+

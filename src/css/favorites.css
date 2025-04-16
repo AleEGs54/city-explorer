@@ -1,0 +1,87 @@
+:root {
+    --primary-blue-color: #1E7093;
+    --accent-red-color: #d7001a;
+    --title-font: 'Poppins', 'Helvetica', 'Neue', 'Arial', 'sans-serif';
+    --text-font: 'Open Sans', 'Helvetica', 'Neue', 'Arial', 'sans-serif';
+    --text-font-size-medium: 16px;
+    --text-font-size-large: 32px;
+  
+  }
+  
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: var(--text-font);
+  }
+  
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--title-font);
+    margin: 0;
+  }
+
+  h1{
+    font-size: var(--text-font-size-large);
+  }
+  
+  .subtitle{
+    font-family: var(--title-font);
+  }
+
+
+  /* Cards */
+
+  .card{
+    display: flex;
+    flex-direction: row;
+    border: 2px solid #5b5b5b87;
+    overflow: hidden;
+    border-radius: .8rem;
+    
+  }
+
+  .place-information{
+    margin-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .stars-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .place-price{
+    display: flex;
+    align-items: center;
+  }
+
+  .small-review{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .place-types{
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+  }
+
+  .type{
+    color: #5b5b5bf2;
+    border: 2px solid #5b5b5b87;
+    width: fit-content;
+    padding: .5rem;
+    border-radius: 2rem;
+  }

@@ -1,9 +1,9 @@
 import { buildInfoWindowCard } from "./userInterface.mjs";
 
 export default class Map {
-    constructor(userLocation, apiKey) {
+    constructor(userLocation=null, runAutocomplete=false) {
         this.location = userLocation
-        this.apiKey = apiKey
+        this.apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
         this.map;
         this.data = [];
         this.markers = []; 
@@ -11,9 +11,6 @@ export default class Map {
 
     init() {
         this.getGoogleMapsApi();
-        // this.initMap();
-        // this.buildAdvancedMarker();
-        // this.nearbySearch();
     }
 
     async getGoogleMapsApi() {
@@ -215,6 +212,21 @@ export default class Map {
             this.buildAdvancedMarker(place, content, open=true);
         });
 
+    }
+
+    async getPlaceDetailsById(id, fields){
+        const { Place } = await google.maps.importLibrary('places');
+
+        //Build the place with the id
+        const place = new Place({
+            id: id
+        })
+
+        await place.fetchFields({
+            fields: fields
+        });
+
+        return place;
     }
 }
 
