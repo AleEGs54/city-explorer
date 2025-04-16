@@ -14,7 +14,6 @@ const fields = ['displayName', 'photos', 'rating', 'userRatingCount', 'reviews',
 
 favoritesIdList.forEach(async (id) => {
     const placeInfo = await map.getPlaceDetailsById(id, fields);
-    console.log(placeInfo)
     const placeDetails = new PlaceDetails(placeInfo);
     placeDetails.displayFavoriteCard();
     

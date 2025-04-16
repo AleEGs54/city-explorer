@@ -4,8 +4,6 @@ import { buildSimpleCard, buildBodyCarousel, setIconState, initializeIconStates 
 import { toggleItemInStorage } from "./localStorageManagement.mjs";
 import { loadHeaderFooter } from "./utils.mjs";
 
-const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-
 async function initApp() {
 
 

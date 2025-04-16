@@ -41,7 +41,6 @@ export async function loadHeaderFooter() {
 
   // get template
   const header = await loadTemplate(headerPath);
-  // console.log(header)  // for testing purpose
   const footer = await loadTemplate(footerPath);
 
   // render template
@@ -55,4 +54,8 @@ export function getParam(param) {
   const urlParams = new URLSearchParams(queryString);
   const place = urlParams.get(param);
   return place;
+}
+
+export async function copyLink(text){
+  await navigator.clipboard.writeText(text);
 }

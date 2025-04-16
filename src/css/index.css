@@ -189,6 +189,12 @@ h6 {
 }
 /* End map section */
 /* Suggestions section */
+
+.card-link, .card-link:visited{
+text-decoration: none;
+color: #000;
+}
+
 .suggestions-section{
   width: 70vw;
   margin: 3rem auto;

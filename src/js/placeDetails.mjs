@@ -15,7 +15,7 @@ export default class PlaceDetails {
     }
 
     displayFavoriteCard(){
-        const main = document.querySelector('cards');
+        const main = document.querySelector('.cards');
         buildFavoriteCard(main,this.data);
     }
 
