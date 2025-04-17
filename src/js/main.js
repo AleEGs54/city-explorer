@@ -3,6 +3,7 @@ import Map from "./Map.mjs";
 import { setLocalStorage } from "./localStorageManagement.mjs";
 import { buildSimpleCard, buildBodyCarousel, initializeIconStates, attachCardIconListeners } from "./userInterface.mjs";
 import { loadHeaderFooter } from "./utils.mjs";
+import Weather from "./Weather.mjs";
 
 
 async function initApp() {
@@ -15,10 +16,15 @@ async function initApp() {
     const userLocation = new UserLocation();
     const locationData = await userLocation.getLocation();
 
+
     const map = new Map();
 
     map.init(); // Load Google Maps API
-    await map.initMap(locationData,true);
+    await map.initMap(locationData, true);
+
+    const weather = new Weather(locationData);
+    weather.init();
+
 
     // Store the location in localStorage only if it was successfully retrieved
     if (locationData.lat !== 43.81463458983826 && locationData.lng !== -111.78321208736119) {
@@ -42,6 +48,22 @@ async function initApp() {
     attachCardIconListeners();
     initializeIconStates();
 
+    //Card animation
+    const suggestionsContainers = document.querySelectorAll('.suggestions-cards-container');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target); // Stop observing once visible
+        }
+      });
+    }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+
+    suggestionsContainers.forEach(container => {
+      observer.observe(container);
+    })
+
 
     //filters!!!
     const filterButtons = document.querySelectorAll('.filter-button');
@@ -55,7 +77,7 @@ async function initApp() {
 
     //end filters!!!
 
-    
+
 
   } catch (error) {
     console.error("An error occurred during app initialization:", error);

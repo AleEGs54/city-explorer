@@ -14,7 +14,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:wght@400;700&display=swap"
     rel="stylesheet">
-    <link rel="shortcut icon" href="./public/assets/images/city-explorer-icon.webp" type="image/x-icon">
+  <link rel="shortcut icon" href="./public/assets/images/city-explorer-icon.webp" type="image/x-icon">
   <script type="module" src="./js/main.js"></script>
 </head>
 
@@ -27,19 +27,22 @@
       <h1>Where to?</h1>
       <ul class="filters-section-list">
         <li class="filters-section-list-item" data-active>
-          <button class="filters-section-list-searchall-button filter-button" aria-label="Search all locations" data-filter="no-filter">
+          <button class="filters-section-list-searchall-button filter-button" aria-label="Search all locations"
+            data-filter="no-filter">
             <img src="./assets/icons/home.svg" alt="Home icon">
             <span>Search All</span>
           </button>
         </li>
         <li class="filters-section-list-item">
-          <button class="filters-section-list-poi-button filter-button"  aria-label="Search points of interest" data-filter="shopping">
+          <button class="filters-section-list-poi-button filter-button" aria-label="Search points of interest"
+            data-filter="shopping">
             <img src="./assets/icons/camera.svg" alt="Camera icon">
             <span>Shopping</span>
           </button>
         </li>
         <li class="filters-section-list-item">
-          <button class="filters-section-list-restaurants-button filter-button" aria-label="Search restaurants" data-filter="restaurant">
+          <button class="filters-section-list-restaurants-button filter-button" aria-label="Search restaurants"
+            data-filter="restaurant">
             <img src="./assets/icons/coffee.svg" alt="Cup icon">
             <span>Restaurants</span>
           </button>
@@ -51,7 +54,8 @@
           </button>
         </li>
         <li class="filters-section-list-item">
-          <button class="filters-section-list-entertainment-button filter-button" aria-label="Search entertainment" data-filter="entertainment">
+          <button class="filters-section-list-entertainment-button filter-button" aria-label="Search entertainment"
+            data-filter="entertainment">
             <img src="./assets/icons/film.svg" alt="Film icon">
             <span>Entertainment</span>
           </button>
@@ -62,7 +66,7 @@
       <form class="search-form">
         <div class="search-section">
           <img src="./assets/icons/search.svg" alt="">
-            
+
         </div>
         <button type="button">Search</button>
       </form>
@@ -73,6 +77,32 @@
         <span>Immersive Map</span>
       </div>
       <div id="map"></div>
+    </section>
+
+    <section class="weather-section">
+      <h2>Weather in your area</h2>
+      <div class="weather-cards">
+        <section class="curr-weather-card h-card">
+          <h3 class="subtitle">Weather</h3>
+          <div id="weather-info">
+            <!-- In this box, the following information will be displayed soon: temperature, weather conditions, and other relevant weather details.
+                  <p>Temperature: 75°F</p>
+                  <p>Conditions: Partly Cloudy</p>
+                  <p>Humidity: 60%</p>
+                  <p>Wind: 10 mph NE</p> -->
+            <!-- Image and weather info comes here -->
+          </div>
+        </section>
+        <section class="fore-weather-card h-card">
+          <h3 class="subtitle">Weather Forecast</h3>
+          <div id="forecast-info">
+            <!-- Tomorrow's forecast: High of 80°F, Low of 65°F, Partly Cloudy
+              The day after tomorrow's forecast: High of 82°F, Low of 66°F, Mostly Sunny
+              The day after the day after tomorrow's forecast: High of 78°F, Low of 64°F, Partly Cloudy -->
+            <!-- Image and forecast info comes here -->
+          </div>
+        </section>
+      </div>
     </section>
 
     <div class="suggestions-section" id="recommended">
@@ -90,7 +120,7 @@
     </div>
   </main>
   <footer id="footer">
-    
+
   </footer>
 </body>
 

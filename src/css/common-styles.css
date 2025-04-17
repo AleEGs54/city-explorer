@@ -47,7 +47,7 @@ header {
   width: 100%;
   height: 100%;
   /* link effects */
-  transition: background-color .3s ease-in-out;
+  transition: background-color .3s ease-in-out, transform 0.2s ease-in-out;
 }
 
 .navigation-list-item .highlight {
@@ -61,6 +61,7 @@ header {
 
 .navigation-list-item a:hover {
   background-color: rgba(128, 128, 128, 0.174);
+  transform: translateY(-2px); /* slight upward movement */
 
 }
 
@@ -190,7 +191,7 @@ footer {
     overflow: hidden;
     width: 100%;
     gap: 5px;
-    padding: 0 5px;
+    padding: 0 15px;
   }
 
   .navigation-list.open {

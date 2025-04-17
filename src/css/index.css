@@ -188,6 +188,65 @@ h6 {
 }
 
 /* End map section */
+/* WEATHER SECTION */
+.weather-cards{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.h-card{
+  display: flex;
+  flex-direction: column;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  padding: 1rem 4rem;
+  border: 1px solid #00000033;
+  border-radius: .8rem;
+}
+
+.h-card h3 {
+  background-color: var(--text-color);
+  color: var(--accent-color);
+  text-align: center;
+}
+
+/* Weather-info */
+
+.weather-section{
+  display: flex;
+  flex-direction: column;
+  width: 70vw;
+  margin: 0 auto;
+  gap: 1rem;
+}
+
+#weather-info{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: .5em;
+}
+
+  
+
+/* Forecast */
+.fore-weather-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#forecast-info{
+  align-self: center;
+  margin: .5rem auto;
+
+}
+
+/* WEATHER SECTION END */
 /* Suggestions section */
 
 .card-link,
@@ -209,8 +268,16 @@ h6 {
 .suggestions-cards-container {
   display: flex;
   flex-direction: column;
+
+  opacity: 0; /* Start invisible */
+  transform: translateY(50px); /* Start below its final position */
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out; /* Smooth transition */
 }
 
+.suggestions-cards-container.visible {
+  opacity: 1; /* Become visible */
+  transform: translateY(0); /* Move to its final position */
+}
 
 
 .suggestions-header {
@@ -476,6 +543,22 @@ h6 {
     margin: 0;
   }
 
+  .weather-section{
+    width: 90vw;
+
+  }
+
+  .weather-cards{
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem;
+  
+  }
+
+  .curr-weather-card #weather-info{
+    flex-direction: column;
+  }
+
   .suggestions-section{
     width: 90vw;
     margin: 1rem auto;
@@ -516,5 +599,19 @@ h6 {
 @media (min-width: 768px) and (max-width: 1500px) {
   .suggestions-section{
     width: 90vw;
+  }
+
+  .weather-section{
+    width: 90vw;
+  }
+
+  .h-card{
+
+    width: 20rem;
+    margin: 0 auto;
+  }
+
+  #weather-info{
+    flex-direction: column;
   }
 }
