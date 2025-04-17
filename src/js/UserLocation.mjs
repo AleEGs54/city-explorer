@@ -1,21 +1,25 @@
+import { getLocalStorage } from "./localStorageManagement.mjs";
+
 export default class UserLocation {
 
-    /** 
-    *The constructor takes the BYU-Idaho building as default (maybe the user doesn't want to share his location). Or can take customized latLng values; if not, it will try to get the user's real location.
-    */
-    constructor(latitude = 43.81463458983826, longitude = -111.78321208736119, enableHighAccuracy = true, timeout = Infinity, maximumAge = 0) {
-
-        this.location = {
-            lat: latitude,
-            lng: longitude
-        }
-
+    /**
+   * The constructor checks for a stored location in localStorage.
+   * If not found, it uses the BYU-Idaho building as default.
+   */
+    constructor(enableHighAccuracy = true, timeout = Infinity, maximumAge = 0) {
+        const storedLocation = getLocalStorage("lastLocation");
+    
+        this.location = storedLocation || {
+          lat: 43.81463458983826,
+          lng: -111.78321208736119,
+        };
+    
         this.options = {
-            enableHighAccuracy: enableHighAccuracy,
-            timeout: timeout,
-            maximumAge: maximumAge
-        }
-    }
+          enableHighAccuracy: enableHighAccuracy,
+          timeout: timeout,
+          maximumAge: maximumAge,
+        };
+      }
 
     async getLocation() {
         try {

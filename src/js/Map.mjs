@@ -8,7 +8,7 @@ export default class Map {
 
         this.map;
         this.data = [];
-        this.markers = []; 
+        this.markers = [];
 
 
     }
@@ -29,7 +29,7 @@ export default class Map {
     /**
      * Initializes the map
     */
-    async initMap(location, runAutocomplete=false) {
+    async initMap(location, runAutocomplete = false) {
         //Save the location in the object
         this.location = location;
         // Request needed libraries.
@@ -43,7 +43,7 @@ export default class Map {
             mapId: 'DEMO_MAP_ID',
         });
 
-        if (runAutocomplete){
+        if (runAutocomplete) {
             //Link to the autocomplete search bar
             this.runPlaceAutocomplete(this.map);
 
@@ -70,7 +70,7 @@ export default class Map {
             glyph: new URL(String(place.svgIconMaskURI)),
         });
 
-        // The marker, positioned at user's location
+        // The marker which points to the specified location
         const marker = new AdvancedMarkerElement({
             map: this.map,
             position: place.location,
@@ -123,7 +123,7 @@ export default class Map {
         //Specify the details of the request
         const request = {
             //required parameter
-            fields: ['displayName', 'photos', 'rating', 'userRatingCount', 'reviews', 'priceLevel', 'primaryType', 'location', 'types', 'svgIconMaskURI', 'iconBackgroundColor'],
+            fields: ['displayName', 'photos', 'rating', 'userRatingCount', 'reviews', 'priceLevel', 'primaryType', 'location', 'types', 'svgIconMaskURI', 'iconBackgroundColor', 'formattedAddress'],
             locationRestriction: {
                 center: this.location,
                 radius: 2500,
@@ -149,8 +149,10 @@ export default class Map {
             //Loop through and get all the results.
             places.forEach((place) => {
 
-                //Builds markers for each place and adds an icon to it.
-                this.buildAdvancedMarker(place);
+                let content = buildInfoWindowCard(place);
+
+                //Build the marker for the place selected
+                this.buildAdvancedMarker(place, content,false);
 
                 //Extend the search to the places searchNearby found (otherwise these wont show up in the map)
                 bounds.extend(place.location);
@@ -219,12 +221,12 @@ export default class Map {
             let content = buildInfoWindowCard(place);
 
             //Build the marker for the place selected
-            this.buildAdvancedMarker(place, content, open=true);
+            this.buildAdvancedMarker(place, content,true);
         });
 
     }
 
-    async getPlaceDetailsById(id, fields){
+    async getPlaceDetailsById(id, fields) {
         const { Place } = await google.maps.importLibrary('places');
 
         //Build the place with the id

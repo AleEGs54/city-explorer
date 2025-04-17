@@ -1,5 +1,6 @@
 import UserLocation from "./UserLocation.mjs";
 import Map from "./Map.mjs";
+import { setLocalStorage } from "./localStorageManagement.mjs";
 import { buildSimpleCard, buildBodyCarousel, setIconState, initializeIconStates } from "./userInterface.mjs";
 import { toggleItemInStorage } from "./localStorageManagement.mjs";
 import { loadHeaderFooter } from "./utils.mjs";
@@ -19,6 +20,11 @@ async function initApp() {
 
     map.init(); // Load Google Maps API
     await map.initMap(locationData,true);
+
+    // Store the location in localStorage only if it was successfully retrieved
+    if (locationData.lat !== 43.81463458983826 && locationData.lng !== -111.78321208736119) {
+      setLocalStorage('lastLocation', locationData);
+    }
 
     // Load all categories initially
     await map.nearbySearch(['restaurant', 'movie_theater', 'park', 'shopping_mall', 'museum']);

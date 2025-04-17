@@ -291,8 +291,8 @@ color: #000;
 .suggestion-check-icon, .suggestion-heart-icon{
   position: absolute;
   top: 10px;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
   background-color: #fff;
   border-radius: 2rem;
   padding: 5px;
