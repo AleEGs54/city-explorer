@@ -48,6 +48,11 @@ export async function loadHeaderFooter() {
   parentFooter.innerHTML = footer;
 
   toShare(document.querySelector('.toCopy'), window.location.href, true, 'Thanks for Sharing!')
+
+  document.querySelector('#menu').addEventListener('click', ()=>{
+    const burguerNav = document.querySelector('#burguer-menu-nav');
+    burguerNav.classList.toggle('open');
+  })
 }
 
 

@@ -167,7 +167,6 @@ h6 {
   gap: 1rem;
   width: fit-content;
 
-  cursor: pointer;
   transition: all .3s ease-in-out;
 }
 
@@ -435,7 +434,7 @@ h6 {
 
 /* Call to action end */
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
 
   /* Filters Section */
   .filters-section{
@@ -449,7 +448,7 @@ h6 {
     -ms-overflow-style: none;
     /* Internet Explorer 10+ */
     width: 90%;
-
+    justify-content: space-around;
 
     gap: 1.5rem;
     padding: 0 1rem;;
@@ -460,7 +459,8 @@ h6 {
   }
 
   .search-form{
-    margin: 2rem 1rem;
+    margin: 2rem auto;
+
   }
 
   .search-form button{
@@ -511,4 +511,10 @@ h6 {
       text-align: center;
     }
 
+}
+
+@media (min-width: 768px) and (max-width: 1500px) {
+  .suggestions-section{
+    width: 90vw;
+  }
 }

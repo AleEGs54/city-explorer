@@ -111,7 +111,7 @@ h1{
 
 /* Small view */
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .cards{
     margin: 0 auto;
     padding: 1rem;
@@ -119,7 +119,19 @@ h1{
 
   .card.card{
     flex-direction: column;
+    margin: 0 auto;
   }
+
+  .card .picture-container{
+    max-width: none;
+    width: 100%;
+  }
+
+  .card .picture-container img{
+    width: 100%;
+    height: 20rem;
+    object-fit: cover;
+  } 
   
   .card .place-information{
     padding: 1rem;
@@ -127,11 +139,12 @@ h1{
   }
 
   .small-review{
+    flex-direction: column;
     text-align: start;
     justify-content: space-around;
 
     span{
-      max-width: 10rem;
+      max-width: 20rem;
     }
 
   }
@@ -144,5 +157,35 @@ h1{
 
   .place-types .type{
     text-align: center;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1000px) {
+
+  .card.card{
+    max-width: 553px;
+  }
+
+  .card .place-information{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card .picture-container{
+    max-width: none;
+    width: 100%;
+  }
+
+  .card .picture-container img{
+    width: 100%;
+    height: 20rem;
+    object-fit: cover;
+  }
+
+  .place-types{
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
   }
 }
