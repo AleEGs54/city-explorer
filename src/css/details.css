@@ -132,9 +132,11 @@ h1 {
         padding: .5rem;
         flex-direction: row;
         align-items: center;
+        justify-content: center;
         gap: .5rem;
         text-decoration: none;
         color: #fff;
+        text-align: center;
 
     }
 
@@ -258,4 +260,76 @@ h1 {
 
 }
 
-/* place-details-review-highlights end*/
+/* small views */
+@media (max-width: 768px){
+    .place-details-pictures-container{
+        width: 100%;
+        border-radius: 0;
+        height: 30rem;
+    }
+
+    .place-details-mainInformation{
+        flex-direction: column;
+        padding:1rem;
+        margin: 1rem auto;
+        gap: 2rem;
+    }
+
+    .place-details-mainInformation-reviewSummary{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .buttons-list{
+        flex-direction: column;
+        gap: .5rem;
+        text-align: center;
+    
+    }
+
+    .place-details-mainInformation-contactInformation .contactInformation svg{
+        width: 24px;
+        height: 24px;
+    }
+
+    .contactInformation address{
+        max-width: 14rem;
+    }
+
+
+    .place-details-location-hours{
+        margin: 0 auto;
+        padding: 1rem;
+    }
+
+    #map#map{
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .location-hours{
+        flex-direction: column;
+
+    }
+
+    .place-details-review-highlights{
+        margin: 0 auto;
+        padding: 1rem;
+    }
+
+    .reviews{
+        margin-top: 2rem;
+    }
+
+    .review-box{
+        border: 1px solid black;
+        flex-direction: column;
+        padding: 1rem 0;
+        border-radius: .8rem ;
+        img{
+            width: 5rem;
+            margin: 1rem 0;
+        }
+    }
+}

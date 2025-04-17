@@ -253,7 +253,7 @@ export function buildInformativeCard(htmlParentElement, place) {
         </span>
         <span class='small-review'>
         <svg xmlns="http://www.w3.org/2000/svg" width='24' viewBox="0 0 512 512"><path d="M160 368c26.5 0 48 21.5 48 48l0 16 72.5-54.4c8.3-6.2 18.4-9.6 28.8-9.6L448 368c8.8 0 16-7.2 16-16l0-288c0-8.8-7.2-16-16-16L64 48c-8.8 0-16 7.2-16 16l0 288c0 8.8 7.2 16 16 16l96 0zm48 124l-.2 .2-5.1 3.8-17.1 12.8c-4.8 3.6-11.3 4.2-16.8 1.5s-8.8-8.2-8.8-14.3l0-21.3 0-6.4 0-.3 0-4 0-48-48 0-48 0c-35.3 0-64-28.7-64-64L0 64C0 28.7 28.7 0 64 0L448 0c35.3 0 64 28.7 64 64l0 288c0 35.3-28.7 64-64 64l-138.7 0L208 492z"/></svg>
-            ${resizeText(place.reviews[0].text)}
+          <span>${resizeText(place.reviews[0].text)}</span>
         </span>
         <span class='place-types'>
             ${place.types.slice(0, 2).map(type => `<div class='type'>${capitalizeEachWord(replaceUnderscoresWithSpaces(type))}</div>`).join('')}
@@ -316,9 +316,9 @@ export function buildDetailedCard(htmlParentElement, place) {
         <svg xmlns="http://www.w3.org/2000/svg" width='24' viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg>
       </span>
       <span class='contactInformation'>
-        <adress>
+        <address>
         ${checkAvailability(place?.formattedAddress, () => `${place.formattedAddress}`)}
-        </adress>
+        </address>
         <svg xmlns="http://www.w3.org/2000/svg" width='24' viewBox="0 0 384 512"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>
       </span>
     </section>

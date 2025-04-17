@@ -108,3 +108,41 @@ h1{
   padding: .5rem;
   border-radius: 2rem;
 }
+
+/* Small view */
+
+@media (max-width: 768px) {
+  .cards{
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  .card.card{
+    flex-direction: column;
+  }
+  
+  .card .place-information{
+    padding: 1rem;
+    margin: 0;
+  }
+
+  .small-review{
+    text-align: start;
+    justify-content: space-around;
+
+    span{
+      max-width: 10rem;
+    }
+
+  }
+
+  .place-types{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .place-types .type{
+    text-align: center;
+  }
+}

@@ -25,7 +25,7 @@ h6 {
   font-family: var(--title-font);
 }
 
-.subtitle{
+.subtitle {
   font-family: var(--title-font);
 }
 
@@ -56,12 +56,12 @@ h6 {
   list-style: none;
 }
 
-.filters-section-list-item[data-active]{
+.filters-section-list-item[data-active] {
   border-bottom: 2px solid #000;
-  
+
 }
 
-.filters-section-list-item:hover{
+.filters-section-list-item:hover {
   border-bottom: 2px solid #000;
 }
 
@@ -76,18 +76,18 @@ h6 {
   cursor: pointer;
   font-size: var(--text-font-size-medium);
   margin-bottom: .5rem;
-  
+
 }
 
 
-.filters-section-list-item button img{
+.filters-section-list-item button img {
   width: 1.5rem;
 }
 
 /* Filters Section End */
 /* Search Section */
 
-.search-form{
+.search-form {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -103,8 +103,8 @@ h6 {
   padding: 0 .5rem;
 }
 
-.search-section{
-  
+.search-section {
+
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -114,12 +114,12 @@ h6 {
   height: 100%;
 }
 
-.search-section img{
+.search-section img {
   width: 24px;
   height: 24px;
 }
 
-#search-bar{
+#search-bar {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -130,11 +130,11 @@ h6 {
 
 /* Effects */
 
-#search-bar:focus{
+#search-bar:focus {
   outline: none;
 }
 
-.search-form button{
+.search-form button {
   background-color: var(--primary-blue-color);
   color: #fff;
   border: none;
@@ -146,13 +146,13 @@ h6 {
   transition: background-color .4s ease-in-out;
 }
 
-.search-form button:hover{
+.search-form button:hover {
   background-color: #2387b2;
 }
 
 /* Search Section End */
 /* Map Section */
-.map-section{
+.map-section {
   margin: 3rem auto;
   width: 70vw;
   display: flex;
@@ -160,7 +160,7 @@ h6 {
   gap: 1rem;
 }
 
-.map-section-immersivemap{
+.map-section-immersivemap {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -171,31 +171,33 @@ h6 {
   transition: all .3s ease-in-out;
 }
 
-.map-section-immersivemap:hover{
+.map-section-immersivemap:hover {
   font-size: 16.5px;
   font-weight: 600;
 }
 
-.map-section-immersivemap img{
+.map-section-immersivemap img {
   width: 24px;
 }
 
-.map-section #map{
+.map-section #map {
   background-color: #000;
   border-radius: .8rem;
   width: 100%;
   height: 32rem;
   margin: 0 auto;
 }
+
 /* End map section */
 /* Suggestions section */
 
-.card-link, .card-link:visited{
-text-decoration: none;
-color: #000;
+.card-link,
+.card-link:visited {
+  text-decoration: none;
+  color: #000;
 }
 
-.suggestions-section{
+.suggestions-section {
   width: 70vw;
   margin: 3rem auto;
 
@@ -205,14 +207,14 @@ color: #000;
   gap: 2rem;
 }
 
-.suggestions-cards-container{
+.suggestions-cards-container {
   display: flex;
   flex-direction: column;
 }
 
 
 
-.suggestions-header{
+.suggestions-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -220,29 +222,30 @@ color: #000;
 
 
 
-.arrows{
+.arrows {
   display: flex;
   flex-direction: row;
   gap: .5rem;
 }
 
-.arrows button{
+.arrows button {
   background-color: transparent;
   border-radius: 1.9rem;
   border: none;
   transition: all .3s ease-in-out;
 }
-.arrows img{
+
+.arrows img {
   width: 2rem;
   cursor: pointer;
 }
 
-.arrows button:hover{
+.arrows button:hover {
   background-color: #00000033;
 }
 
 
-.carousel-container{
+.carousel-container {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -250,30 +253,31 @@ color: #000;
   gap: 1rem;
 }
 
-.carousel-container .card{
+.carousel-container .card {
   min-width: 17rem;
   height: 27rem;
   border: 1px solid #00000033;
-  border-radius: .8rem;;
+  border-radius: .8rem;
+  ;
 }
 
-.card-image{
+.card-image {
   position: relative;
   height: 10rem;
 }
 
-.suggestion-place-image{
+.suggestion-place-image {
   width: 100%;
   height: 100%;
-  border-radius: .8rem .8rem 0 0 ;
+  border-radius: .8rem .8rem 0 0;
   display: block;
   object-fit: cover;
-  
+
 }
 
-.suggestion-heart-icon.on{
-  color: red;        
-  fill: red;         
+.suggestion-heart-icon.on {
+  color: red;
+  fill: red;
 }
 
 .suggestion-heart-icon:hover {
@@ -282,13 +286,15 @@ color: #000;
 }
 
 .suggestion-check-icon.on {
-  color: green;     
-}
-.suggestion-check-icon:hover {
-  color: green;     
+  color: green;
 }
 
-.suggestion-check-icon, .suggestion-heart-icon{
+.suggestion-check-icon:hover {
+  color: green;
+}
+
+.suggestion-check-icon,
+.suggestion-heart-icon {
   position: absolute;
   top: 10px;
   width: 2rem;
@@ -299,82 +305,86 @@ color: #000;
   cursor: pointer;
 }
 
-.suggestions-card-information{
-  padding: 0 1rem ;
+.suggestions-card-information {
+  padding: 0 1rem;
   display: flex;
   flex-direction: column;
   gap: .5rem;
 }
 
-.suggestions-title{
+.suggestions-title {
   margin: 1rem 0 0;
 }
 
-.suggestion-check-icon{
+.suggestion-check-icon {
   right: 60px;
 }
 
-.suggestion-heart-icon{
+.suggestion-heart-icon {
   right: 10px;
 }
 
-.suggestions-section-stars, .suggestions-section-cost{
+.suggestions-section-stars,
+.suggestions-section-cost {
   display: flex;
   flex-direction: row;
   justify-content: start;
   align-items: center;
 }
 
-.suggestions-section-stars{
+.suggestions-section-stars {
   justify-content: space-between;
 }
 
 
 .star-icon {
-  color: transparent; /* Sin relleno por defecto */
+  color: transparent;
+  /* Sin relleno por defecto */
 }
 
 .star-icon.filled {
-  color: black; /* El "relleno" interior (path) en negro sobre fondo dorado */
+  color: black;
+  /* El "relleno" interior (path) en negro sobre fondo dorado */
 }
 
-.suggestion-description{
+.suggestion-description {
   font-size: var(--text-font-size-medium);
 }
 
-.suggestion-description-text{
-  margin: 0;;
+.suggestion-description-text {
+  margin: 0;
+  ;
 }
 
-.extra-info{
+.extra-info {
   color: #000000b6;
 }
 
 /* Info Windows */
-#infowindow-content{
+#infowindow-content {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-#infowindow-content #place-displayname{
+#infowindow-content #place-displayname {
   font-size: var(--text-font-size-large);
 }
 
-#infowindow-content .suggestions-section-stars{
+#infowindow-content .suggestions-section-stars {
   display: flex;
   justify-content: start;
   gap: .5rem;
 }
 
-#infowindow-content .extra-info{
+#infowindow-content .extra-info {
   margin: 0;
   font-size: var(--text-font-size-medium);
 }
 
 /* Suggestions section end */
 /* call to action */
-.call-to-action-container{
+.call-to-action-container {
   margin: 10rem auto;
   width: 33vw;
   display: flex;
@@ -385,14 +395,14 @@ color: #000;
   /* border: 1px solid #000; */
 }
 
-.call-to-action-text{
+.call-to-action-text {
   margin: 0 auto;
   font-size: 3rem;
   text-align: center;
   font-variant: var(--title-font);
 }
 
-.call-to-action-button{
+.call-to-action-button {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -409,18 +419,96 @@ color: #000;
   transition: all .3s ease-in-out;
 }
 
-.call-to-action-button img{
+.call-to-action-button img {
   width: 2rem;
   transition: all .3s ease-in-out;
 }
 
-.call-to-action-button:hover{
+.call-to-action-button:hover {
   background-color: #000;
   color: #fff;
 }
 
-.call-to-action-button:hover img{
+.call-to-action-button:hover img {
   filter: invert(100%);
 }
 
 /* Call to action end */
+
+@media (max-width: 768px) {
+
+  /* Filters Section */
+  .filters-section{
+    gap: 2rem;
+  }
+
+  .filters-section-list {
+
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+    width: 90%;
+
+
+    gap: 1.5rem;
+    padding: 0 1rem;;
+
+  }
+  .filters-section-list::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+  }
+
+  .search-form{
+    margin: 2rem 1rem;
+  }
+
+  .search-form button{
+    display: none;
+  }
+
+  .map-section{
+    width: 90%;
+  }
+  
+
+  .map-section #map{
+    margin: 0;
+  }
+
+  .suggestions-section{
+    width: 90vw;
+    margin: 1rem auto;
+  }
+
+  .suggestions-cards-container{
+    gap: 1.5rem;
+  }
+
+  .carousel-container .card{
+    min-width: 15rem;
+    height: 100%;
+  }
+
+  .call-to-action-container{
+    margin: 0 auto;
+    width: auto;
+    padding: 1rem;
+  }
+
+  /* map dialog */
+    #infowindow-content div.suggestions-section-stars, #infowindow-content div.suggestions-section-cost{
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    #place-displayname, #place-address{
+      text-align: center;
+    }
+
+    #infowindow-content .subtitle{
+      text-align: center;
+    }
+
+}
