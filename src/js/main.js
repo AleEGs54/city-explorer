@@ -1,8 +1,7 @@
 import UserLocation from "./UserLocation.mjs";
 import Map from "./Map.mjs";
 import { setLocalStorage } from "./localStorageManagement.mjs";
-import { buildSimpleCard, buildBodyCarousel, setIconState, initializeIconStates } from "./userInterface.mjs";
-import { toggleItemInStorage } from "./localStorageManagement.mjs";
+import { buildSimpleCard, buildBodyCarousel, initializeIconStates, attachCardIconListeners } from "./userInterface.mjs";
 import { loadHeaderFooter } from "./utils.mjs";
 
 
@@ -56,6 +55,8 @@ async function initApp() {
 
     //end filters!!!
 
+    
+
   } catch (error) {
     console.error("An error occurred during app initialization:", error);
   }
@@ -74,32 +75,7 @@ function renderSection(title, sectionSelector, filterFn, mapInstance) {
     .forEach(place => buildSimpleCard(container, place));
 }
 
-/**
- * Adds event listeners to all cards for like/visited icons
- */
-function attachCardIconListeners() {
-  const cards = document.querySelectorAll('.card');
 
-  cards.forEach((card) => {
-    const actions = [
-      { iconClass: '.suggestion-heart-icon', storageKey: 'likedPlaces' },
-      { iconClass: '.suggestion-check-icon', storageKey: 'visitedPlaces' },
-    ];
-
-    actions.forEach(({ iconClass, storageKey }) => {
-      const icon = card.querySelector(iconClass);
-      if (!icon) return;
-
-      icon.addEventListener('click', (event) => {
-        event.stopPropagation();
-        event.preventDefault();
-        
-        toggleItemInStorage(storageKey, card.dataset.id);
-        setIconState(card, iconClass);
-      });
-    });
-  });
-}
 
 
 

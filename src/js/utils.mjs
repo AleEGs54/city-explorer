@@ -46,6 +46,8 @@ export async function loadHeaderFooter() {
   // render template
   parentHeader.innerHTML = header;
   parentFooter.innerHTML = footer;
+
+  toShare(document.querySelector('.toCopy'), window.location.href, true, 'Thanks for Sharing!')
 }
 
 
@@ -56,6 +58,12 @@ export function getParam(param) {
   return place;
 }
 
-export async function copyLink(text){
-  await navigator.clipboard.writeText(text);
+export function toShare(htmlElement, text, toMessage=false, message=''){
+  htmlElement.addEventListener('click', async ()=>{
+    await navigator.clipboard.writeText(text)
+    if (toMessage) {
+      htmlElement.textContent=message
+    }
+  })
+
 }

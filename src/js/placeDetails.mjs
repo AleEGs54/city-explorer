@@ -1,4 +1,5 @@
-import { buildDetailedCard, buildFavoriteCard } from "./userInterface.mjs";
+import { buildDetailedCard, buildInformativeCard } from "./userInterface.mjs";
+import { toShare } from "./utils.mjs"; 
 
 
 
@@ -11,12 +12,13 @@ export default class PlaceDetails {
     displayDetailedCard() {
         const main = document.querySelector('main');
         buildDetailedCard(main,this.data);
+        toShare(document.querySelector('.button-share'), window.location.href, true, 'Copied!');
 
     }
 
-    displayFavoriteCard(){
-        const main = document.querySelector('.cards');
-        buildFavoriteCard(main,this.data);
+    displayInformativeCard(htmlParentElement){
+        const element = document.querySelector(htmlParentElement);
+        buildInformativeCard(element,this.data);
     }
 
 
