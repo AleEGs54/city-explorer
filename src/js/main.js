@@ -4,6 +4,8 @@ import { buildSimpleCard, buildBodyCarousel, setIconState, initializeIconStates 
 import { toggleItemInStorage } from "./localStorageManagement.mjs";
 import { loadHeaderFooter } from "./utils.mjs";
 
+const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
 async function initApp() {
 
 
@@ -14,10 +16,10 @@ async function initApp() {
     const userLocation = new UserLocation();
     const locationData = await userLocation.getLocation();
 
-    const map = new Map(locationData, true);
+    const map = new Map();
 
     map.init(); // Load Google Maps API
-    await map.initMap();
+    await map.initMap(locationData,true);
 
     // Load all categories initially
     await map.nearbySearch(['restaurant', 'movie_theater', 'park', 'shopping_mall', 'museum']);
@@ -97,39 +99,21 @@ function attachCardIconListeners() {
 
 
 async function displayFilteredResultsOnMap(filterType, mapInstance) {
-  if (filterType === 'no-filter') {
-    filterType = ['restaurant', 'movie_theater', 'park', 'shopping_mall', 'museum'];
-  } else if (filterType === 'entertainment') {
-    filterType = [
-      "amusement_park",
-      "plaza",
-      "national_park",
-      "tourist_attraction",
-      "concert_hall",
-      "aquarium",
-      "zoo",
-      "water_park",
-      "movie_theater"
-    ];
-  } else if (filterType === 'shopping') {
-    filterType = [
-      "grocery_store",
-      "supermarket",
-      "department_store",
-      "convenience_store",
-      "shopping_mall",
-      "warehouse_store",
-      "book_store",
-      "electronics_store",
-      "clothing_store",
-      "home_goods_store"
+  const filterOptions = {
+    'no-filter': ['restaurant', 'movie_theater', 'park', 'shopping_mall', 'museum'],
+    'entertainment': [
+      'amusement_park', 'plaza', 'national_park', 'tourist_attraction',
+      'concert_hall', 'aquarium', 'zoo', 'water_park', 'movie_theater'
+    ],
+    'shopping': [
+      'grocery_store', 'supermarket', 'department_store', 'convenience_store',
+      'shopping_mall', 'warehouse_store', 'book_store', 'electronics_store',
+      'clothing_store', 'home_goods_store'
     ]
-  } else {
-    filterType = [filterType];
+  };
 
-  }
-
-  await mapInstance.nearbySearch(filterType);
+  const filters = filterOptions[filterType] || [filterType];
+  await mapInstance.nearbySearch(filters);
 }
 
 // Run the app

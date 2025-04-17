@@ -1,8 +1,7 @@
 import { buildInfoWindowCard } from "./userInterface.mjs";
 
 export default class Map {
-    constructor(userLocation=null) {
-        this.location = userLocation
+    constructor() {
         this.apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
         this.map;
         this.data = [];
@@ -28,6 +27,8 @@ export default class Map {
      * Initializes the map
     */
     async initMap(location, runAutocomplete=false) {
+        //Save the location in the object
+        this.location = location;
         // Request needed libraries.
         const { Map } = await google.maps.importLibrary("maps");
 
@@ -35,7 +36,7 @@ export default class Map {
         // The map, centered at user's location
         this.map = new Map(document.getElementById("map"), {
             zoom: 15,
-            center: location,
+            center: this.location,
             mapId: 'DEMO_MAP_ID',
         });
 

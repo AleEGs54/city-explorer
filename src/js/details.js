@@ -11,9 +11,11 @@ map.init()
 const fields = ['displayName', 'photos', 'rating', 'userRatingCount', 'reviews', 'priceLevel', 'regularOpeningHours','websiteURI','internationalPhoneNumber', 'formattedAddress', 'location', 'svgIconMaskURI', 'iconBackgroundColor'];
 
 (async () => {
+
  const placeInfo = await map.getPlaceDetailsById(id, fields);
  const placeDetails = new PlaceDetails(placeInfo);
  placeDetails.displayDetailedCard()
  map.initMap(placeInfo.location)
  map.buildAdvancedMarker(placeInfo)
+ 
 })();
