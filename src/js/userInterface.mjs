@@ -185,6 +185,7 @@ function checkAvailability(info, callback) {
   }
 }
 
+const placeholderImage = './public/assets/images/image-placeholder.webp';
 
 export function buildSimpleCard(htmlParentElement, place) {
 
@@ -193,11 +194,13 @@ export function buildSimpleCard(htmlParentElement, place) {
     return;
   }
 
+  const imageUrl = checkAvailability(place?.photos, () => place.photos[0].getURI());
+
   htmlParentElement.insertAdjacentHTML('beforeend', `
     <a href="./placeDetails/?place=${place.id}" class="card-link">
       <div class="card" data-id=${place.id}>
         <div class="card-image">
-          <img src="${checkAvailability(place?.photos, () => place.photos[0].getURI())}" alt="image placeholder" class="suggestion-place-image" width='200' height='200'>
+          <img src="${imageUrl || placeholderImage}" alt="image placeholder" class="suggestion-place-image" width='200' height='200'>
           <svg class="suggestion-check-icon" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
         <defs>
       <style>.cls-1{fill:currentColor;}</style>
@@ -231,11 +234,13 @@ export function buildSimpleCard(htmlParentElement, place) {
 }
 
 export function buildInformativeCard(htmlParentElement, place) {
+  const imageUrl = checkAvailability(place?.photos, () => place.photos[0].getURI());
+
   htmlParentElement.insertAdjacentHTML('beforeend', `
     <a href="../placeDetails/?place=${place.id}" class="card-link">
     <div class='card'>
       <div class="picture-container">
-        <img src="${checkAvailability(place?.photos, () => place.photos[0].getURI())}" alt="${place.displayName}'s picture" width='300' height='300'>
+        <img src="${imageUrl || placeholderImage}" alt="${place.displayName}'s picture" width='300' height='300'>
       </div>
       <div class="place-information">
         <h2 classs'place-name'>${place.displayName}</h2>
@@ -265,11 +270,11 @@ export function buildInformativeCard(htmlParentElement, place) {
 }
 
 export function buildDetailedCard(htmlParentElement, place) {
-
+  const imageUrl = checkAvailability(place?.photos, () => place.photos[0].getURI());
   htmlParentElement.insertAdjacentHTML('beforeend', `
 <div class="place-details-container">
   <div class="place-details-pictures-container">
-    <img src="${checkAvailability(place?.photos, () => place.photos[0].getURI())}" alt="${place.displayName}'s picture">
+    <img src="${imageUrl || placeholderImage}" alt="${place.displayName}'s picture">
   </div>
   <div class="place-details-mainInformation">
     <section class="place-details-mainInformation-reviewSummary">
